@@ -1,0 +1,8 @@
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\ResolveAssemblyReference.cache
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\MiniEncryptionNotepad.Properties.Resources.resources
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\MiniEncryptionNotepad.csproj.GenerateResource.Cache
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\MiniEncryptionNotepad.eNotepad.resources
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\bin\Debug\MiniEncryptionNotepad.exe
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\bin\Debug\MiniEncryptionNotepad.pdb
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\MiniEncryptionNotepad.exe
+Y:\github\2016-4-25\FirstApp\MiniEncryptionNotepad\MiniEncryptionNotepad\obj\Debug\MiniEncryptionNotepad.pdb
