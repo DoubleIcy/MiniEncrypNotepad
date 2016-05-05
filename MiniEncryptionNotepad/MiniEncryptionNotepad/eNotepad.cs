@@ -15,24 +15,29 @@ namespace MiniEncryptionNotepad
 
         public static EncryClass key = new EncryClass();
         private DataSet ds = new DataSet();
-
+        private bool ifDecodeSpace = true;
         public eNotepad()
         {
             InitializeComponent(); 
+
+            string keyfilename = Application.StartupPath + "\\Key.txt"; 
             try
             {
-                ds.ReadXml("c:\\windows\\KeyInfo.xml");
-                key.setKeyList = ds.Tables[0].Rows[0][0].ToString();
+                string strpass=ReadFromFile(keyfilename);
+                if (string.IsNullOrEmpty(strpass.Trim()))
+                    throw new Exception();
+                key.setKeyList = strpass;
             }
             catch
             {
-                key.Randomkey();
+                string strpass = key.Randomkey();
+                WriteToFile(keyfilename, strpass);
             }
         }
 
         private void toolStripButton_Open_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "文本文件 (*.txt)|*.txt|xml文件 (*.xml)|*.xml|ini文件 (*.ini)|*.ini|All files (*.*)|*.*";
+            openFileDialog1.Filter = "text Files (*.txt)|*.txt|xml Files (*.xml)|*.xml|ini Files (*.ini)|*.ini|All files (*.*)|*.*";
             if (DialogResult.OK == openFileDialog1.ShowDialog())
             {
                 string file = openFileDialog1.SafeFileName;
@@ -68,28 +73,81 @@ namespace MiniEncryptionNotepad
 
         private void toolStripButton_Save_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.Filter = "text Files (*.txt)|*.txt|xml Files (*.xml)|*.xml|ini Files (*.ini)|*.ini|All files (*.*)|*.*";
+            if (DialogResult.OK == saveFileDialog1.ShowDialog())
+            {
+                DeSpace();
+                string str = key.encode(notepad.Text);
+                notepad.Text = key.encodeListNumStr;
 
+                WriteToFile(((FileDialog)saveFileDialog1).FileName, key.encodeListNumStr);
+            }
         }
 
         private void toolStripButton_Mini_Click(object sender, EventArgs e)
         {
-
+            this.ShowInTaskbar = false;
+            this.FreeNotepad.Icon = this.Icon;
+            this.Hide();
         }
-
-        private void toolStripButton_Edit_Click(object sender, EventArgs e)
+  
+        /// <summary>
+        /// CLEAR THE DOUBLE SPACES TO SINGLE,SO THAT THERE'S NO PLACE EASY TO DECODE
+        /// </summary>
+        public void DeSpace()
         {
+            if (!ifDecodeSpace)
+                return;
 
+            string str = notepad.Text;
+            while (str.Contains("  "))
+            {
+                str = str.Replace("      ", " ").Replace("  ", " ");
+            }
+            notepad.Text = str;
         }
-
-        private void toolStripButton_Pass_Click(object sender, EventArgs e)
+        public void WriteToFile(string file , string text)
         {
-
+            StreamWriter SW; 
+            SW = File.CreateText(file);
+            SW.WriteLine(text);
+            SW.Close();
         }
 
-     
+        private string ReadFromFile(string filename)
+        {
+            StreamReader streamReader = File.OpenText(filename);
+            string strReadOutLine = null;
+            StringBuilder sb = new StringBuilder();
+ 
+            strReadOutLine = streamReader.ReadLine();
+            while (strReadOutLine != null)
+            {
+                sb.Append(strReadOutLine);
+                strReadOutLine = streamReader.ReadLine();
+            }
+            streamReader.Close();
+            return sb.ToString();
+        }
 
- 
- 
+        private void FreeNotepad_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            clickYX(e);
+        }
+
+        private void clickYX(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.Show();
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Visible = true;
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
  
     }
 }

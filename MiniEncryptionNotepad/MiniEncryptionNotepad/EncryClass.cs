@@ -10,7 +10,7 @@ namespace MiniEncryptionNotepad
         private int[] myKeyList = new int[0];
         public string setKeyList
         {
-            get { return ""; }
+            get { return "U can't read the password"; }
             set {
                 char[] charList = value.ToCharArray();
                 myKeyList = new int[charList.Length];
@@ -24,11 +24,12 @@ namespace MiniEncryptionNotepad
         Random rdm = new Random();
         public string Randomkey()
         {
+            //random key's length is 49 to 1024
             int keyLength = rdm.Next(49, 1024);
             int[] _intLists = new int[keyLength];
             for(int i=0;i<_intLists.Length;i++)
             {
-                _intLists[i] = rdm.Next(48, 65534);//Max is 65535
+                _intLists[i] = rdm.Next(33, 126); 
             }
             myKeyList = _intLists;
             string _str = intsList_StringList(_intLists);
@@ -94,7 +95,26 @@ namespace MiniEncryptionNotepad
             }
             return sb.ToString();
         }
-
+        public static string intsList_StringIntsList(int[] intsList)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < intsList.Length; i++)
+            {
+                sb.Append("\\");
+                sb.Append(intsList[i]);
+            }
+            return sb.ToString();
+        }
+        //public static string StringIntsList_intsList(int[] intsList)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    for (int i = 0; i < intsList.Length; i++)
+        //    {
+        //        sb.Append("\\");
+        //        sb.Append(intsList[i]);
+        //    }
+        //    return sb.ToString();
+        //}
         public int[] StringList_IntsList(string str)
         {
             char[] _charList = str.ToCharArray();
